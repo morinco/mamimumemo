@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js"></script>
+    <script src="js/controls/OrbitControls.js"></script>
+    <script>
+      // ページの読み込みを待つ
+      window.addEventListener('load', init);
+
+      function init() {
+        // サイズを指定
+        const width = 960;
+        const height = 540;
+
+        // レンダラーを作成
+        const canvasElement = document.querySelector('#myCanvas')
+        const renderer = new THREE.WebGLRenderer({
+          canvas: canvasElement,
+        });
+        renderer.setSize(width, height);
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 100, 500);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, canvasElement);
+
+
+        // メッシュ作成
+        const mesh = new THREE.Mesh(new THREE.BoxGeometry(300, 300, 300), new THREE.MeshNormalMaterial());
+        //scene.add(mesh);
+
+        // メッシュ作成（球）
+        const sphere = new THREE.Mesh( new THREE.SphereGeometry( 100, 30, 320 ), new THREE.MeshNormalMaterial( {color: 0xFF0000} ) );
+        //scene.add( sphere );
+
+        // メッシュ作成（球）
+        const Torus = new THREE.Mesh( new THREE.TorusGeometry( 100, 30, 160, 1000), new THREE.MeshNormalMaterial( {color: 0xFF0000} ) );
+        //scene.add( Torus );
+
+        // グループを作る
+        const group = new THREE.Group();
+        // 3D空間にグループを追加する
+        scene.add(group);
+
+        for (let i = 0; i < 10; i++) {
+          // 直方体を作成
+          const geometry = new THREE.SphereGeometry(30, 30, 30);
+          const material = new THREE.MeshNormalMaterial();
+          const mesh = new THREE.Mesh(geometry, material);
+
+          // 配置座標を計算
+          const radian = (i / 10) * Math.PI * 2;
+          mesh.position.set(
+            200 * Math.cos(radian), // X座標
+            30, // Y座標
+            200 * Math.sin(radian) // Z座標
+          );
+
+          // グループに追加する
+          group.add(mesh);
+        }
+
+        // スポットライト光源を作成
+        // new THREE.SpotLight(色, 光の強さ, 距離, 角度, ボケ具合, 減衰率)
+        const light = new THREE.SpotLight(0xffffff, 2, 50, Math.PI / 4, 0, 0.5);
+        scene.add(light);
+        light.position.set(1, 1, 1);
+
+
+        //-----------------
+        tick();
+
+        // 毎フレーム時に実行されるループイベントです
+        function tick() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+  </body>
+</html>

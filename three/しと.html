@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js"></script>
+    <script src="js/controls/OrbitControls.js"></script>
+    <script>
+      // ページの読み込みを待つ
+      window.addEventListener('load', init);
+
+      function init() {
+        // サイズを指定
+        const width = 960;
+        const height = 540;
+
+        // レンダラーを作成
+        const canvasElement = document.querySelector('#myCanvas')
+        const renderer = new THREE.WebGLRenderer({
+          canvas: canvasElement,
+        });
+        renderer.setSize(width, height);
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(1000, 100, 500);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, canvasElement);
+
+        //-----------------
+        // オブジェクト作成
+        const geometry = new THREE.OctahedronGeometry(300,0);
+        const material = new THREE.MeshPhongMaterial({ color: 'white' });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // 平行光源
+        const directionalLight = new THREE.DirectionalLight('blue',1);
+        directionalLight.position.set(1, 100, 1);
+        scene.add(directionalLight);
+
+        // ポイント光源
+        const pointLight = new THREE.PointLight('blue', 1, 1000);
+        pointLight.position.set(-200, -200, -200);
+        scene.add(pointLight);
+        const pointLightHelper = new THREE.PointLightHelper(pointLight, 0);
+        scene.add(pointLightHelper);
+
+        // ポイント光源
+        const pointLight2 = new THREE.PointLight('blue', 1, 1000);
+        pointLight2.position.set(200, -200, -200);
+        scene.add(pointLight2);
+        const pointLightHelper2 = new THREE.PointLightHelper(pointLight2, 0);
+        scene.add(pointLightHelper2);
+
+        // ポイント光源
+        const pointLight3 = new THREE.PointLight('blue', 1, 1000);
+        pointLight3.position.set(-200, -200, 200);
+        scene.add(pointLight3);
+        scene.add(new THREE.PointLightHelper(pointLight3, 30));
+
+        //-----------------
+        tick();
+
+        // 毎フレーム時に実行されるループイベントです
+        function tick() {
+          // レンダリング
+          renderer.render(scene, camera);
+
+          // 照明の位置を更新
+          const t = Date.now() / 500;
+          const r = 30.0;
+          const lx = r * Math.cos(t);
+          const lz = r * Math.sin(t);
+          const ly = 6.0 + 5.0 * Math.sin(t / 3.0);
+          pointLight2.position.set(lx*-4, ly*-50, lz*-4);
+          pointLight.position.set(lx-200, ly*-50, ly-200);
+
+          requestAnimationFrame(tick);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+  </body>
+</html>
