@@ -6,4 +6,4 @@ https://publish.twitter.com
 <a class="twitter-timeline" href="https://twitter.com/ngnchiikawa?ref_src=twsrc%5Etfw">Tweets by ngnchiikawa</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ◆URL
-https://morinco.github.io/mamimumemo/embed/rss_
+https://morinco.github.io/mamimumemo/embed/
