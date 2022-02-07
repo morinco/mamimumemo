@@ -12,7 +12,6 @@
     <script type="text/javascript">
     $(function() {
         // ページ読み込み時
-        window.navigate("http://www.google.co.jp/search");
         var apiurl = "https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=" + document.title;
         $.ajax({
                 url: apiurl,
