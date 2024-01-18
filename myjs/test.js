@@ -5,10 +5,9 @@ function easterEgg(event) {
   var str = sessionStorage["key"];
 
   // メッセージボックスを表示
-  if (str.includes('ArrowUpArrowUpArrowDownArrowDownArrowRightArrowLeftab')) {
+  if (str.includes('ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba')) {
     sessionStorage["key"] = "";
     alert(`イースターエッグ！`);
   } else {
   }
 }
-
