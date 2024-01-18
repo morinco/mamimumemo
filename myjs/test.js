@@ -1,4 +1,4 @@
-function checkSequence(event) {
+function easterEgg(event) {
   
   const key = event.key;
   sessionStorage["key"] = sessionStorage["key"] + key;
