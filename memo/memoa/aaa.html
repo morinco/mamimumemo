@@ -6,14 +6,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="manifest" href="manifest.json">
-    <title>aaa</title>    
+    <title>memo</title>    
     <script>
-    $(function(){
-        $('#header').load('./header.html'); 
-    });
     $(function() {
         // ページ読み込み時
-        var apiurl = "https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=" + document.title;
+        var apiurl = "https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=" + window.location.href;
         $.ajax({
                 url: apiurl,
                 type: 'GET',
@@ -38,7 +35,7 @@
     function regist() {
       var apiurl = "https://afzpmmaa5d.execute-api.ap-northeast-1.amazonaws.com/default/registmemo";
       var data = {
-          'key': document.title,
+          'key': window.location.href,
           'value': $('#memostr').val()
       }
       $.ajax({
@@ -72,11 +69,7 @@
     </head>
     
     <body>
-      <div id="header"></div>
       <!--#include virtual="./header.html" -->
-      <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memoa/xxx.html'">い</button>
-      <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memob/xxx.html'">ろ</button>
-      <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memoc/xxx.html'">は</button>
       <textarea class="form-control"  id="memostr" rows=100/>
 </body>
 </html>
