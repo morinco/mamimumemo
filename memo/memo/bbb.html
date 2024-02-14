@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang='ja'>
-
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="manifest" href="manifest.json">
-    <title>ccc</title>
-    <script type="text/javascript">
+    <title>memo</title>    
+    <script>
+    $(function(){
+        $('#header').load('./header.html'); 
+    });      
     $(function() {
         // ページ読み込み時
-        var apiurl = "https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=" + document.title;
+        var apiurl = "https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=" + window.location.href;
         $.ajax({
                 url: apiurl,
                 type: 'GET',
@@ -36,7 +38,7 @@
     function regist() {
       var apiurl = "https://afzpmmaa5d.execute-api.ap-northeast-1.amazonaws.com/default/registmemo";
       var data = {
-          'key': document.title,
+          'key': window.location.href,
           'value': $('#memostr').val()
       }
       $.ajax({
@@ -51,11 +53,11 @@
 
           })
           .fail(function(jqXHR, textStatus, errorThrown) {
-              alert(errorThrown);
+            alert(errorThrown);
           })
-    }
+        }
         
-    });
+      });
     </script>
     <style type="text /css">
     <!--
@@ -66,14 +68,11 @@
     -->
     </style>
 
-
-</head>
-
-<body>
-<button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memoa/xxx.html'">い</button>
-<button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memob/xxx.html'">ろ</button>
-<button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memoc/xxx.html'">は</button>
-<textarea class="form-control"  id="memostr" rows=100/>
+    
+    </head>
+    
+    <body>
+      <div id="header"></div>
+      <textarea class="form-control"  id="memostr" rows=100/>
 </body>
-
 </html>
