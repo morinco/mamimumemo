@@ -1,8 +1,8 @@
 {
-    "short_name": "ksk-memo",
-    "name": "ksk-memo",
+    "short_name": "memo",
+    "name": "memo",
     "display": "standalone",
-    "start_url": "xxx.html",
+    "start_url": "aaa.html",
     "icons": [
         {
             "src": "icon.jpg",
