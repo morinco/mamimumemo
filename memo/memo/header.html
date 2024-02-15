@@ -3,4 +3,28 @@
   <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memo/bbb.html'">ろ</button>
   <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memo/ccc.html'">は</button>
   <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memo/ddd.html'">に</button>
+  <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memo/eee.html'">トレ</button>
+  <button onclick="location.href='https://morinco.github.io/mamimumemo/memo/memo/fff.html'">オフ</button>
+  <select id="selectLink" onchange="navigateToLink()">
+    <option value="" selected disabled>リンク</option>
+    <option value="https://docs.google.com/forms/d/e/1FAIpQLSeLZ-zcy40XSZkpJamohlAEiIZQP0e8HdVXG3D6LQyEq9oW6w/viewform">カケボ</option>
+    <option value="https://morinco.github.io/mamimumemo/memo/ksk/xxx.html">ksk</option>
+    <option value="https://zexy.net/mar/honshi/">ゼクシィ</option>
+    <option value="https://chat.openai.com/">チャット</option>
+    <option value="https://www.y2mate.com/jp121/youtube-mp3">mp3</option>
+    <option value="https://vscode.dev/github/morinco/tasks">vscode</option>
+    <option value="https://docs.google.com/spreadsheets/d/15Id_tAz1PoUCkYy9PViL_ccg-LDsbLvv/edit#gid=1634837475">カレンダ</option>
+    <option value="https://f-cs.jp/wcsv2/index.php?id=71093">churin</option>
+    <option value="https://www.kitsune.ne.jp/cgi_bin/fortune/yes_no.cgi#Result">きつね</option>  
+  </select>
 </nav>
+<script>
+  function navigateToLink() {
+      var selectElement = document.getElementById("selectLink");
+      var selectedValue = selectElement.options[selectElement.selectedIndex].value;
+
+      if (selectedValue) {
+          window.location.href = selectedValue;
+      }
+  }
+</script>
