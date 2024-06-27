@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang='ja'>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <title>memo</title>    
+    <script>
+    $(function(){
+        $('#header').load('./header.html'); 
+    });      
+    $(function() {
+        // ページ読み込み時
+        var apiurl = "https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=" + window.location.href;
+        $.ajax({
+                url: apiurl,
+                type: 'GET',
+                dataType: 'json',
+            })
+            // Ajaxリクエスト成功時
+            .done(function(response) {
+              var item = response.value;
+              document.getElementById('memostr').value = item;
+
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                //alert(errorThrown)
+            })
+
+
+
+        $('#memostr').on('change', function(){
+          regist();
+        } );
+        
+    function regist() {
+      var apiurl = "https://afzpmmaa5d.execute-api.ap-northeast-1.amazonaws.com/default/registmemo";
+      var data = {
+          'key': window.location.href,
+          'value': $('#memostr').val()
+      }
+      $.ajax({
+              url: apiurl,
+              type: 'POST',
+              dataType: 'json',
+              data: JSON.stringify(data)
+          })
+
+          .done(function(response) {
+            //location.reload();//リロード
+
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+          })
+        }
+        
+      });
+    </script>
+    <style type="text /css">
+    <!--
+      form-control {
+          height: 100vh;
+          rows: 50;
+      }
+    -->
+    </style>
+
+    
+    </head>
+    
+    <body>
+      <div id="header"></div>
+      <textarea class="form-control"  id="memostr" rows=100/>
+</body>
+</html>
