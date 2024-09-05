@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Expense Tracker</title>
+</head>
+<body class="bg-gray-200 h-screen flex items-center justify-center">
+
+    <div class="w-96 bg-white p-4 grid grid-rows-10 grid-cols-3 gap-4">
+
+        <!-- テキストボックス -->
+        <input id="display" type="text" class="col-span-3 p-2 border border-gray-300 focus:outline-none mb-2" readonly>
+
+        <!-- ボタン1～9, 0, -, + -->
+        <button onclick="appendToDisplay('1')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">1</button>
+        <button onclick="appendToDisplay('2')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">2</button>
+        <button onclick="appendToDisplay('3')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">3</button>
+        <button onclick="appendToDisplay('4')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">4</button>
+        <button onclick="appendToDisplay('5')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">5</button>
+        <button onclick="appendToDisplay('6')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">6</button>
+        <button onclick="appendToDisplay('7')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">7</button>
+        <button onclick="appendToDisplay('8')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">8</button>
+        <button onclick="appendToDisplay('9')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">9</button>
+        <button onclick="appendToDisplay('0')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">0</button>
+        <button onclick="appendToDisplay('-')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">-</button>
+        <button onclick="appendToDisplay('+')" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">+</button>
+
+        <!-- C ボタン -->
+        <button onclick="clearDisplay()" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">C</button>
+
+        <!-- BS ボタン -->
+        <button onclick="backspace()" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none">BS</button>
+
+        <!-- = ボタン -->
+        <button onclick="calculate()" class="col-span-1 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none self-end">=</button>
+
+        <!-- プルダウン1: カテゴリ選択 -->
+        <select id="category" class="col-span-1 p-2 border border-gray-300 focus:outline-none mb-2">
+            <option value="101">食費</option>
+            <option value="102">外食</option>
+            <option value="103">雑貨</option>
+            <option value="104">服</option>
+            <option value="105">衛生</option>
+            <option value="106">娯楽</option>
+            <option value="107">旅行</option>
+            <option value="108">ガソリン</option>
+            <option value="109">薬</option>
+            <option value="110">酒</option>
+            <option value="111">交際</option>
+            <option value="112">定期</option>
+            <option value="113">バイク</option>
+            <option value="114">車</option>
+            <option value="201">ガス</option>
+            <option value="202">水道</option>
+            <option value="203">電気</option>
+        </select>
+
+        <!-- プルダウン2: 年選択 -->
+        <select id="yearSelect" class="col-span-1 p-2 border border-gray-300 focus:outline-none mb-2"></select>
+
+        <!-- プルダウン3: 月選択 -->
+        <select id="monthSelect" class="col-span-1 p-2 border border-gray-300 focus:outline-none mb-2"></select>
+
+        <!-- 登録 ボタン -->
+        <button onclick="registerExpense()" class="col-span-3 p-2 border border-gray-300 hover:bg-gray-100 focus:outline-none self-end">登録</button>
+
+    </div>
+
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function calculate() {
+            try {
+                document.getElementById('display').value = eval(document.getElementById('display').value);
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function backspace() {
+            let currentValue = document.getElementById('display').value;
+            document.getElementById('display').value = currentValue.slice(0, -1);
+        }
+
+        // 年と月のプルダウンを動的に生成
+        function populateYearSelect() {
+            const yearSelect = document.getElementById('yearSelect');
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+
+            for (let i = 0; i <= 3; i++) {
+                const year = currentYear - i;
+                const option = document.createElement('option');
+                option.value = year;
+                option.text = year;
+                yearSelect.add(option);
+            }
+
+            // 初期表示は現在の年
+            yearSelect.value = currentYear;
+        }
+
+        function populateMonthSelect() {
+            const monthSelect = document.getElementById('monthSelect');
+            const currentDate = new Date();
+
+            for (let i = 1; i <= 12; i++) {
+                const optionValue = i.toString().padStart(2, '0');
+                const optionText = i.toString().padStart(2, '0');
+                const option = document.createElement('option');
+                option.value = optionValue;
+                option.text = optionText;
+                monthSelect.add(option);
+            }
+
+            // 初期表示は現在の月
+            const currentMonth = currentDate.getMonth() + 1; // 0-indexed
+            monthSelect.value = currentMonth.toString().padStart(2, '0');
+        }
+
+        function registerExpense() {
+            const category = document.getElementById('category').value;
+            const year = document.getElementById('yearSelect').value;
+            const month = document.getElementById('monthSelect').value;
+            const amount = document.getElementById('display').value;
+
+            // GASの関数を呼び出してデータを処理
+            alert(category);
+            alert(year);
+            alert(month);
+            alert(amount);
+
+            // テキストボックスをクリア
+            document.getElementById('display').value = '';
+            
+        }
+
+        // 初期表示時に年月プルダウンを生成
+        document.addEventListener('DOMContentLoaded', function() {
+            populateYearSelect();
+            populateMonthSelect();
+        });
+    </script>
+
+</body>
+</html>
