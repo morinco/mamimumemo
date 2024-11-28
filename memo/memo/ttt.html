@@ -7,7 +7,16 @@
     <link rel="icon" type="image/png" href="icon.png">  
     
     <style>
-        body {
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* コンテンツの上に表示するために高い値を設定 */
+            background-color: white; /* 必要なら背景色を設定 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 必要なら影を追加 */
+        }        
+        #body {
             font-family: Arial, sans-serif;
             background-color: #white;
             display: flex;
