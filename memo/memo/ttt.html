@@ -4,13 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tabmemo</title>
-    <link rel="icon" type="image/png" href="icon.png">
-    <script>
-        $(function(){
-            $('#header').load('./header.html'); 
-        });
-    </script>
-
+    <link rel="icon" type="image/png" href="icon.png">  
     
     <style>
         body {
@@ -94,8 +88,6 @@
             margin-top: 10px;
         }
     </style>
-    
-
 </head>
 <body>
     <div id="header"></div>
@@ -110,7 +102,7 @@
         <textarea id="memo-content" oninput="saveMemo()"></textarea>
     </div>
 
-    <script>
+    <script>        
         const baseKey = "data20241128";
         const hash = location.hash ? location.hash.slice(1) : "";
         const key = hash ? `${baseKey}_${hash}` : baseKey;
@@ -264,6 +256,24 @@
             tabWidth = document.getElementById("tabs").offsetWidth;
             syncWithAPI();
         });
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("./header.html")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok " + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById("header").innerHTML = html;
+                })
+                .catch(error => {
+                    console.error("Failed to load header:", error);
+                });
+        });
+
     </script>
         
 
