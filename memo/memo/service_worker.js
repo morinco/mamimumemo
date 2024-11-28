@@ -1,8 +1,7 @@
 // キャッシュファイルの指定
 var CACHE_NAME = 'moris-caches';
 var urlsToCache = [
-    '/test-moritama.s3-ap-northeast-1.amazonaws.com/input.html'
-    ,'/test-moritama.s3-ap-northeast-1.amazonaws.com/list.html'
+    'index.html'
 ];
 
 // インストール処理

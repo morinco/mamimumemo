@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tabmemo</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <script>
+        $(function(){
+            $('#header').load('./header.html'); 
+        });
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #white;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            body {
+                height: 85vh;
+            }
+        }
+
+        #tabs {
+            width: 200px;
+            border-right: 1px solid #ccc;
+            padding: 0px 10px 10px 10px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            resize: horizontal;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        #tabs ul {
+            list-style: none;
+            padding: 5px 0 0 0;
+            flex-grow: 1;
+            width: 100%;
+        }
+        #tabs li {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        #tabs li.active {
+            background-color: var(--active-tab-color, #007BFF);
+            color: white;
+        }
+        #tabs li button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        #editor {
+            flex-grow: 1;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+        #editor textarea {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            overflow: auto;
+        }
+        #controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        #tab-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+    </style>
+    
+
+</head>
+<body>
+    <div id="tabs">
+        <ul id="tab-list"></ul>
+        <div id="tab-controls">
+            <button onclick="addTab()">+</button>
+            <input type="color" id="tab-color-picker" onchange="changeActiveTabColor()" value="#007BFF">
+        </div>
+    </div>
+    <div id="editor">
+        <textarea id="memo-content" oninput="saveMemo()"></textarea>
+    </div>
+
+    <script>
+        const baseKey = "data20241128";
+        const hash = location.hash ? location.hash.slice(1) : "";
+        const key = hash ? `${baseKey}_${hash}` : baseKey;
+        let tabs = [{ id: "default", title: "タブ1", content: "" }];
+        let activeTabId = "default";
+        let tabWidth = 200;
+        let activeTabColor = "#007BFF";
+    
+        document.addEventListener("DOMContentLoaded", loadMemo);
+    
+        function saveMemo() {
+            const activeTab = tabs.find(tab => tab.id === activeTabId);
+            if (activeTab) {
+                activeTab.content = document.getElementById("memo-content").value;
+                syncWithAPI();
+            }
+        }
+    
+        function syncWithAPI() {
+            const data = { key, value: JSON.stringify({ tabs, tabWidth, activeTabColor, activeTabId }) };
+            fetch("https://afzpmmaa5d.execute-api.ap-northeast-1.amazonaws.com/default/registmemo", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+        }
+    
+        function loadMemo() {
+            fetch(`https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=${key}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.value) {
+                        // 初回ロードまたはデータなしの場合
+                        tabs = [{ id: "default", title: "タブ1", content: "" }];
+                        activeTabId = "default";
+                    } else {
+                        const parsed = JSON.parse(data.value);
+                        tabs = parsed.tabs?.length ? parsed.tabs : [{ id: "default", title: "タブ1", content: "" }];
+                        tabWidth = parsed.tabWidth || tabWidth;
+                        activeTabColor = parsed.activeTabColor || activeTabColor;
+                        activeTabId = parsed.activeTabId || tabs[0].id;
+                    }
+                    document.getElementById("tabs").style.width = `${tabWidth}px`;
+                    document.getElementById("tab-color-picker").value = activeTabColor;
+                    renderTabs();
+                    renderEditor();
+                })
+                .catch(() => {
+                    // APIエラー時もデフォルトタブを表示
+                    tabs = [{ id: "default", title: "タブ1", content: "" }];
+                    activeTabId = "default";
+                    renderTabs();
+                    renderEditor();
+                });
+        }
+    
+        function renderTabs() {
+            const tabList = document.getElementById("tab-list");
+            tabList.innerHTML = "";
+            tabs.forEach(tab => {
+                const li = document.createElement("li");
+                li.className = tab.id === activeTabId ? "active" : "";
+                if (tab.id === activeTabId) {
+                    li.style.setProperty("--active-tab-color", activeTabColor);
+                }
+    
+                const titleSpan = document.createElement("span");
+                titleSpan.textContent = tab.title;
+                titleSpan.onclick = () => switchTab(tab.id);
+    
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "✕";
+                deleteButton.onclick = (e) => {
+                    e.stopPropagation();
+                    deleteTab(tab.id);
+                };
+    
+                const renameButton = document.createElement("button");
+                renameButton.textContent = "✎";
+                renameButton.onclick = (e) => {
+                    e.stopPropagation();
+                    renameTab(tab.id);
+                };
+    
+                const buttonContainer = document.createElement("div");
+                buttonContainer.style.display = "flex";
+                buttonContainer.appendChild(renameButton);
+                buttonContainer.appendChild(deleteButton);
+    
+                li.appendChild(titleSpan);
+                li.appendChild(buttonContainer);
+                tabList.appendChild(li);
+            });
+        }
+    
+        function renderEditor() {
+            const activeTab = tabs.find(tab => tab.id === activeTabId);
+            document.getElementById("memo-content").value = activeTab ? activeTab.content : "";
+        }
+    
+        function addTab() {
+            const newId = `tab${Date.now()}`;
+            const newTab = { id: newId, title: `タブ${tabs.length + 1}`, content: "" };
+            tabs.push(newTab);
+            activeTabId = newId;
+            renderTabs();
+            renderEditor();
+            syncWithAPI();
+        }
+    
+        function switchTab(tabId) {
+            activeTabId = tabId;
+            renderTabs();
+            renderEditor();
+            syncWithAPI();
+        }
+    
+        function deleteTab(tabId) {
+            if (tabs.length > 1) {
+                tabs = tabs.filter(tab => tab.id !== tabId);
+                if (activeTabId === tabId) {
+                    activeTabId = tabs[0].id;
+                }
+                renderTabs();
+                renderEditor();
+                syncWithAPI();
+            } else {
+                alert("少なくとも1つのタブを保持する必要があります。");
+            }
+        }
+    
+        function renameTab(tabId) {
+            const tab = tabs.find(tab => tab.id === tabId);
+            if (tab) {
+                const newTitle = prompt("新しいタブ名を入力してください", tab.title);
+                if (newTitle) {
+                    tab.title = newTitle;
+                    renderTabs();
+                    syncWithAPI();
+                }
+            }
+        }
+    
+        function changeActiveTabColor() {
+            activeTabColor = document.getElementById("tab-color-picker").value;
+            renderTabs();
+            syncWithAPI();
+        }
+    
+        document.getElementById("tabs").addEventListener("mouseup", () => {
+            tabWidth = document.getElementById("tabs").offsetWidth;
+            syncWithAPI();
+        });
+    </script>
+        
+
+
+</body>
+</html>
