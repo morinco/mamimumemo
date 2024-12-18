@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Memo</title>
+    <link rel="shortcut icon" href="data:image/png;base64,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">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        .file-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 横4列 */
+            gap: 20px;
+        }
+        .file-set {
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .file-set textarea {
+            width: 100%;
+            height: 60px; /* 高さを低く */
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            text-align: center;
+            line-height: 60px;
+            color: #666;
+            border-radius: 5px;
+        }
+        .file-set.dragover {
+            border-color: #00f;
+            background-color: #f0f8ff;
+        }
+        .file-set img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background: #fff; /* 透過部分に背景を追加 */
+        }
+        .file-set a {
+            display: block;
+            margin-top: 5px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+<script>
+    $(function(){
+        $('#header').load('./header.html'); 
+    });   
+    const BASE_KEY_PREFIX = "filememo"; // 基本のKEY_PREFIX
+    const URL_HASH = window.location.hash ? window.location.hash.substring(1) : ""; // ハッシュタグ取得
+    const KEY_PREFIX = `${BASE_KEY_PREFIX}${URL_HASH}`; // ハッシュを追加したKEY_PREFIX
+    const API_GET_URL = "https://q3yerqg9e0.execute-api.ap-northeast-1.amazonaws.com/default/getmemo?key=";
+    const API_POST_URL = "https://afzpmmaa5d.execute-api.ap-northeast-1.amazonaws.com/default/registmemo";
+    const MAX_FILES = 20; // 4列×5行
+
+    $(document).ready(function () {
+        const container = $("<div class='file-container'></div>");
+        $("body").append(container);
+
+        // Add a full-width memo area at the top
+        addTopMemo();
+
+        // Initialize 20 file sets
+        for (let i = 1; i <= MAX_FILES; i++) {
+            createFileSet(i, container);
+            loadFile(i); // Load the saved file for this set
+        }
+    });
+
+    function addTopMemo() {
+        const key = `${KEY_PREFIX}_topmemo`; // 特殊なキーを割り当て
+        const topMemo = $(`<div class="top-memo" style="margin-bottom: 20px;">
+            <textarea id="top-memo" rows="3" placeholder="General memo..." style="width: 100%; box-sizing: border-box; resize: none;"></textarea>
+        </div>`);
+        $("body").prepend(topMemo);
+
+        // Load the saved memo
+        loadTopMemo(key);
+
+        // Save memo on change
+        $("#top-memo").on("input", function () {
+            const memoContent = $("#top-memo").val();
+            saveTopMemo(key, memoContent);
+        });
+    }
+
+    function saveTopMemo(key, memoContent) {
+        const data = {
+            key: key,
+            value: memoContent
+        };
+
+        $.ajax({
+            url: API_POST_URL,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Error saving memo:", errorThrown);
+        });
+    }
+
+    function loadTopMemo(key) {
+        const apiUrl = API_GET_URL + key;
+
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            dataType: 'json',
+        })
+        .done(function (response) {
+            if (response.value) {
+                $("#top-memo").val(response.value);
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching memo:", errorThrown);
+        });
+    }
+
+    function createFileSet(index, container) {
+        const key = `${KEY_PREFIX}${String(index).padStart(3, "0")}`;
+        const fileSet = $(`<div class="file-set" id="file-set-${index}" style="border: 1px solid #ccc; padding: 10px; border-radius: 8px; background: #f9f9f9;"></div>`);
+        const textarea = $(`<textarea placeholder="Paste a file or CSV here" style="width: 100%; height: 60px; box-sizing: border-box; resize: none;"></textarea>`);
+        const gallery = $(`<div class="gallery" style="margin-top: 10px;"></div>`);
+        const spinner = $(`<div class="spinner" style="display:none;">Loading...</div>`);
+
+        fileSet.append(textarea, spinner, gallery);
+        container.append(fileSet);
+
+        textarea.on("paste", function (event) {
+            handlePaste(event, key, gallery, spinner);
+        });
+
+        textarea.on("dragover", function (event) {
+            event.preventDefault();
+            fileSet.css("border-color", "#00f").css("background-color", "#f0f8ff");
+        });
+
+        textarea.on("dragleave", function () {
+            fileSet.css("border-color", "#ccc").css("background-color", "#f9f9f9");
+        });
+
+        textarea.on("drop", function (event) {
+            event.preventDefault();
+            fileSet.css("border-color", "#ccc").css("background-color", "#f9f9f9");
+            handleDrop(event, key, gallery, spinner);
+        });
+    }
+
+    function handlePaste(event, key, gallery, spinner) {
+        const clipboardData = event.originalEvent.clipboardData;
+
+        // Check if the clipboard contains text data
+        const text = clipboardData.getData("text");
+        if (text && isCSV(text)) {
+            saveFile(text, "pasted_data.csv", key, gallery, spinner);
+            return;
+        }
+
+        // Handle image paste
+        const items = clipboardData.items;
+        for (let item of items) {
+            if (item.type.startsWith("image/")) {
+                const file = item.getAsFile();
+                const reader = new FileReader();
+                spinner.show();
+                reader.onload = function () {
+                    saveFile(reader.result, "pasted_image.png", key, gallery, spinner);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+    function handleDrop(event, key, gallery, spinner) {
+        const files = event.originalEvent.dataTransfer.files;
+        if (files.length > 0) {
+            for (let file of files) {
+                if (file.type === "text/csv" || file.name.endsWith(".csv")) {
+                    const reader = new FileReader();
+                    spinner.show();
+                    reader.onload = function () {
+                        saveFile(reader.result, file.name, key, gallery, spinner);
+                    };
+                    reader.readAsText(file); // Read as text for CSV
+                } else if (file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+                    spinner.show();
+                    reader.onload = function () {
+                        saveFile(reader.result, file.name, key, gallery, spinner);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    }
+
+    function saveFile(fileContent, fileName, key, gallery, spinner) {
+        const isImage = fileContent.startsWith("data:image");
+        const data = {
+            key: key,
+            value: JSON.stringify({ fileName: fileName, fileContent: fileContent })
+        };
+
+        gallery.empty(); // Clear the gallery before showing the new content
+
+        if (isImage) {
+            const img = document.createElement("img");
+            img.src = fileContent;
+            gallery.append(img); // Show the image immediately
+        }
+
+        // Add a download link for both images and other files
+        const link = document.createElement("a");
+        link.href = isImage ? fileContent : `data:text/plain;charset=utf-8,${encodeURIComponent(fileContent)}`;
+        link.download = fileName;
+        link.textContent = fileName;
+        gallery.append(link);
+
+        $.ajax({
+            url: API_POST_URL,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        })
+        .done(function () {
+            spinner.hide();
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            spinner.hide();
+            alert("Error saving file: " + errorThrown);
+        });
+    }
+
+    function loadFile(index) {
+        const key = `${KEY_PREFIX}${String(index).padStart(3, "0")}`;
+        const gallery = $(`#file-set-${index} .gallery`);
+        const spinner = $(`#file-set-${index} .spinner`);
+        loadFileByKey(key, gallery, spinner);
+    }
+
+    function loadFileByKey(key, gallery, spinner) {
+        const apiUrl = API_GET_URL + key;
+
+        spinner.show();
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            dataType: 'json',
+        })
+        .done(function (response) {
+            spinner.hide();
+            gallery.empty();
+            if (response.value) {
+                const fileData = JSON.parse(response.value);
+                const fileContent = fileData.fileContent;
+                const fileName = fileData.fileName;
+
+                if (fileContent.startsWith("data:image")) {
+                    const img = document.createElement("img");
+                    img.src = fileContent;
+                    gallery.append(img);
+                }
+
+                // Always show download link
+                const link = document.createElement("a");
+                link.href = fileContent.startsWith("data:image")
+                    ? fileContent
+                    : `data:text/plain;charset=utf-8,${encodeURIComponent(fileContent)}`;
+                link.download = fileName;
+                link.textContent = fileName;
+                gallery.append(link);
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            spinner.hide();
+            console.error("Error fetching file:", errorThrown);
+        });
+    }
+
+    function isCSV(text) {
+        // Check if the text has CSV characteristics
+        return text.includes(",") || text.includes("\n");
+    }
+</script>
+
+
+</head>
+<body>
+    <div id="header"></div>
+</body>
+</html>
